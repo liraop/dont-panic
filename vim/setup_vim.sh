@@ -12,3 +12,6 @@ checkVundle
 printf "Vundle is set\nCopying .vimrc\n"
 CURDIR=`pwd`
 cp -f ${CURDIR}/.vimrc ~/.vimrc
+
+#Install plugins
+vim +PluginInstall +qall
