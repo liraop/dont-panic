@@ -10,4 +10,5 @@ checkVundle() {
 
 checkVundle
 printf "Vundle is set\nCopying .vimrc\n"
-cp -f .vimrc ~/.vimrc
+CURDIR=`pwd`
+cp -f ${CURDIR}.vimrc ~/.vimrc

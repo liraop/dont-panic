@@ -33,7 +33,7 @@ Plugin 'tpope/vim-commentary'
 Plugin 'scrooloose/nerdtree'
 Plugin 'tomasr/molokai'
 Plugin 'jiangmiao/auto-pairs'
-Plugin 'valloric/youcompleteme'
+"Plugin 'valloric/youcompleteme'
 " All of your Plugins must be added before the following line
 call vundle#end()            " required
 filetype plugin indent on    " required
@@ -57,6 +57,8 @@ filetype plugin indent on    " required
 :set list
 :set listchars=eol:$,tab:»·,trail:~,extends:>,precedes:<,space:·
 :colo molokai
+:nmap <F6> :NERDTreeToggle<CR>
+let NERDTreeShowHidden=1
 let g:lightline = {
                         \   'colorscheme' : 'default',
                         \   'active' : {
