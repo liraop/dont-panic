@@ -37,6 +37,8 @@ bindsym XF86AudioRaiseVolume exec --no-startup-id pactl set-sink-volume @DEFAULT
 bindsym XF86AudioLowerVolume exec --no-startup-id pactl set-sink-volume @DEFAULT_SINK@ -10% && $refresh_i3status
 bindsym XF86AudioMute exec --no-startup-id pactl set-sink-mute @DEFAULT_SINK@ toggle && $refresh_i3status
 bindsym XF86AudioMicMute exec --no-startup-id pactl set-source-mute @DEFAULT_SOURCE@ toggle && $refresh_i3status
+bindsym XF86MonBrightnessUp exec --no-startup-id xbacklight +5
+bindsym XF86MonBrightnessDown exec --no-startup-id xbacklight -5
 
 # Use Mouse+$mod to drag floating windows to their wanted position
 floating_modifier $mod
@@ -147,14 +149,13 @@ bindsym $mod+Shift+c reload
 bindsym $mod+Shift+r restart
 # exit i3 (logs you out of your X session)
 bindsym $mod+Shift+e exec "i3-nagbar -t warning -m 'You pressed the exit shortcut. Do you really want to exit i3? This will end your X session.' -B 'Yes, exit i3' 'i3-msg exit'"
-set $Locker betterlockscreen -l dimblur  && sleep 1
 
+set $Locker betterlockscreen
 set $mode_system System (l) lock, (e) logout, (s) suspend, (h) hibernate, (r) reboot, (Shift+s) shutdown
 mode "$mode_system" {
-    bindsym l exec --no-startup-id $Locker, mode "default"
+    bindsym l exec --no-startup-id $Locker -l dimblur, mode "default"
     bindsym e exec --no-startup-id i3-msg exit, mode "default"
-    bindsym s exec --no-startup-id $Locker && systemctl suspend, mode "default"
-    bindsym h exec --no-startup-id $Locker && systemctl hibernate, mode "default"
+    bindsym s exec --no-startup-id $Locker -s dimblur, mode "default"
     bindsym r exec --no-startup-id systemctl reboot, mode "default"
     bindsym Shift+s exec --no-startup-id systemctl poweroff -i, mode "default"  
 
@@ -165,10 +166,10 @@ mode "$mode_system" {
 
 bindsym $mod+Print mode "$mode_system"
 
-set $mode_display Ext Screen (r) right-of, (t) top-of, (x) HDMI2 OFF
+set $mode_display Ext Screen (r) right-of, (a) above-of, (x) HDMI2 OFF
 mode "$mode_display" {
     bindsym r exec --no-startup-id xrandr --output HDMI2 --auto --right-of eDP1, mode "default"
-    bindsym t exec --no-startup-id xrandr --output HDMI2 --auto --top-of eDP1, mode "default"
+    bindsym a exec --no-startup-id xrandr --output HDMI2 --auto --above eDP1, mode "default"
     bindsym x exec --no-startup-id xrandr --output HDMI2 --auto --off, mode "default"
     # back to normal: Enter or Escape
     bindsym Return mode "default"
@@ -205,9 +206,8 @@ bindsym $mod+r mode "resize"
 
 # Start i3bar to display a workspace bar (plus the system information i3status
 # finds out, if available)
-exec --no-startup-id polybar -r example
+exec_always ~/.config/i3/launch_polybar.sh
 
 default_border pixel 0
 exec conky --daemonize
 exec redshift-gtk
-exec --no-startup-id ssh-agent -s 
