@@ -1,0 +1,1 @@
+/home/liraop/.config/polybar/example/launch.sh
